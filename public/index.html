@@ -71,7 +71,7 @@ button:hover {
     <div class="container">
         <h1>PF's Internal Downloads</h1>
 
-        <p>Enter the PIN to download your file:</p>
+        <p>Enter the PIN to download your file</p>
 
         <form action="/download" method="POST">
             <!-- <label for="pin">PIN:</label> -->
@@ -86,7 +86,6 @@ button:hover {
                 <option value="">Select File</option>
                 <option value="sitenants1.tar.gz">sitenants1.tar.gz (9.9GB)</option>
                 <option value="sitenants2.tar.gz">sitenants2.tar.gz (11.2GB)</option>
-                <!-- <option value="sonarqube.zip">sonarqube.zip</option> -->
             </select>
 
             <button type="submit" id="downloadBtn" disabled>Download</button>
@@ -131,7 +130,7 @@ button:hover {
             fetch('/reset-pin', {
                 method: 'POST'
             }).then(response => response.text())
-              .then(text => alert("Request for the new PIN form sender"));
+              .then(text => alert("PIN has been sent to the vault configuration mail:sitenantshosting@gmail.com."));
         });
     </script>
 </body>

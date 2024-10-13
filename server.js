@@ -82,7 +82,7 @@ const transporter = nodemailer.createTransport({
     port: 587, // Common SMTP port
     secure: false, // true for 465, false for other ports
     auth: {
-        user: 'ceo@payflares.com',
+        user: 'tech-support@payflares.com',
         pass: 'Surgeon12*' 
     },
     tls: {
@@ -97,9 +97,9 @@ app.post('/reset-pin', (req, res) => {
 
     // Prepare the email
     const mailOptions = {
-        from: 'ceo@payflares.com', // Sender address
-        to: 'jawiwy@gmail.com', // Replace with the recipient's email
-        subject: 'Your PIN has been reset',
+        from: 'tech-support@payflares.com', // Sender address
+        to: 'sitenantshosting@gmail.com', // Replace with the recipient's email
+        subject: 'Your Payflares Internal Downloads Vault PIN has been reset',
         text: `Your new PIN is: ${req.session.pin}`
     };
 
