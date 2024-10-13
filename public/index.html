@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payflares Bulk Download</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PF's Files Download</h1>
+
+        <p>Enter the PIN to download your file:</p>
+
+        <form action="/download" method="POST">
+            <!-- <label for="pin">PIN:</label> -->
+            <div style="margin:15px">
+                <input type="text" id="pin" placeholder="Enter the storage pin" name="enteredPin" required>
+
+            </div>
+            <div class="message-label" id="pinMessage"></div> <!-- Message label for feedback -->
+
+            <!-- <label for="file">Select File:</label> -->
+            <select id="file" name="fileName" disabled>
+                <option value="">Select File</option>
+                <option value="sitenants1.tar.gz">sitenants1.tar.gz (9.9GB)</option>
+                <option value="sitenants2.tar.gz">sitenants2.tar.gz (11.2GB)</option>
+                <!-- <option value="sonarqube.zip">sonarqube.zip</option> -->
+            </select>
+
+            <button type="submit" id="downloadBtn" disabled>Download</button>
+        </form>
+
+        <div class="pin-reset">
+            <button id="resetPin">Reset PIN</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('pin').addEventListener('input', function() {
+            const enteredPin = this.value;
+
+            // Make API call to validate the PIN
+            fetch('/validate-pin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ enteredPin }).toString()
+            })
+            .then(response => {
+                const messageLabel = document.getElementById('pinMessage');
+
+                if (response.ok) {
+                    // Enable the select dropdown and download button
+                    document.getElementById('file').disabled = false;
+                    document.getElementById('downloadBtn').disabled = false;
+                    messageLabel.textContent = ''; // Clear any previous messages
+                } else {
+                    // Show an error message for incorrect PIN
+                    messageLabel.textContent = 'Incorrect PIN. Please try again.';
+                    document.getElementById('file').disabled = true; // Disable dropdown
+                    document.getElementById('downloadBtn').disabled = true; // Disable download button
+                }
+            })
+            .catch(err => console.error('Error validating PIN:', err));
+        });
+
+        document.getElementById('resetPin').addEventListener('click', function() {
+            fetch('/reset-pin', {
+                method: 'POST'
+            }).then(response => response.text())
+              .then(text => alert("Request for the new PIN form sender"));
+        });
+    </script>
+</body>
+</html>
